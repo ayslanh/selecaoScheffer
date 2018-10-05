@@ -1,0 +1,117 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content">
+    <h3>Gestão Produção Algodão</h3>
+    <hr>
+    <div id="app">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3 col-sm-4">
+                    <form action="" id="formBusca" name="formBusca"
+                        enctype="multipart/form-data" role="form">
+                        {% csrf_token %}
+                        <div class="form-group">
+
+                            <label for="sFaz">Selecione a Fazenda:</label>
+                            <select class="form-control" id="sFaz" name="sFaz">
+                                <option value="1">Fazenda 1</option>
+                                <option value="2">Fazenda 2</option>
+                                <option value="3">Fazenda 3</option>
+                                <option value="4">Fazenda 4</option>
+                                <option value="5">Fazenda 5</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div style="padding-top:2em" class="form-group">
+                        <button type="button" class="btn btn-primary"
+                            id="btnBuscar" name="btnBuscar"
+                            onclick="app.Buscar()"><i class="fa fa-search"></i>&nbsp;Buscar</button>
+                        <button type="button" class="btn btn-success"
+                            id="btnaddEstoque" name="btnaddEstoque"
+                            onclick="app.addEstoque()"><i class="fa fa-plus"></i>&nbsp;Entrada
+                            Estoque</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="card" style="display: none;" id="cardAddProd">
+                        <div class="card-body">
+                            <h5 class="card-title">Entrada Estoque:&nbsp;<span
+                                    id="cardEstoqueFazAdd"></span></h5>
+                            <form method="POST" action="{% url 'add_estoque' %}"
+                                enctype="multipart/form-data" id="formAddProd"
+                                name="formAddProd">
+                                {% csrf_token %}
+                                <input type="hidden" id="idFazAdd"
+                                    name="idFazAdd" value="">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="algodaoTipo">Tipo do
+                                                Algodão:</label>
+                                            <select class="form-control"
+                                                id="algodaoTipo"
+                                                name="algodaoTipo">
+                                                <option value="1">Fardão</option>
+                                                <option value="2">Rolinho</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="qtde">Quantidade:</label>
+                                            <input type="number" id="qtde"
+                                                name="qtde"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group"
+                                            style="padding-top:2em">
+                                            <button type="button" class="btn
+                                                btn-danger"
+                                                onclick="app.hideAddEstoque()">Cancelar</button>
+                                            <button type="submit" class="btn
+                                                btn-success">Salvar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fuild">
+            <div class="card" id="cardTabEstoque">
+                <div class="card-body">
+                    <h5 class="card-title">Estoque:</h5>
+                        <div class="table-responsive">
+                            <table id="tabEstoque" class="table table-hover table-condensed table-striped" >
+                                <thead>
+                                    <tr>
+                                        <th data-column-id="idEstoque">ID</th>
+                                        <th data-column-id="fazenda">Fazenda</th>
+                                        <th data-column-id="qtde">Quantidade</th>
+                                        <th data-column-id="algodaoTipo">Tipo Algodão</th>
+                                        <th data-column-id="dtEntrada">Data</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tb" name="tb">
+
+                                </tbody>
+                            </table>
+                        </div>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
